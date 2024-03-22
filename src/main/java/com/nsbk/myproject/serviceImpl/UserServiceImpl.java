@@ -1,41 +1,33 @@
 package com.nsbk.myproject.serviceImpl;
 
-import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.nsbk.myproject.entities.User;
-import com.nsbk.myproject.repositories.UserRepository;
 import com.nsbk.myproject.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
-	
-	@Autowired
-	UserRepository userRepository;
+public class UserServiceImpl implements UserService {
+
+	private Logger logger = org.slf4j.LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Override
 	public User saveUser(User user) {
-		
+
 		String uuid = UUID.randomUUID().toString();
-		
+
 		user.setId(uuid);
-		
-		return userRepository.save(user);
-	}
+		user.setName(user.getName());
+		user.setEmail(user.getEmail());
+		user.setMobileNo(user.getMobileNo());
 
-	@Override
-	public User getSingleUser(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		System.out.println(user.toString());
 
-	@Override
-	public List<User> getAllUser() {
-		
-		return userRepository.findAll();
+		logger.info("output : {} ", user);
+
+		return user;
 	}
 
 }
